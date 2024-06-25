@@ -1,0 +1,11 @@
+void reverseArray(vector<int> &arr , int m){
+    int n = arr.size();
+    int k = (n - m - 1) / 2;
+    while (k --) {
+      int temp = arr[m + 1];
+      arr[m + 1] = arr[n - 1];
+      arr[n - 1] = temp;
+      m++;
+      n--;
+    };
+}
