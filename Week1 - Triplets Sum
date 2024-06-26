@@ -1,0 +1,57 @@
+#include <bits/stdc++.h> 
+void insertionSort(vector<int> arr, int n)
+{
+    int i, key, j;
+    for (i = 1; i < n; i++) {
+        key = arr[i];
+        j = i - 1;
+
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+}
+int binarySearch(vector<int>arr, int low, int high, int x)
+{
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        // Check if x is present at mid
+        if (arr[mid] == x)
+            return 1;
+
+        // If x greater, ignore left half
+        if (arr[mid] < x)
+            low = mid + 1;
+
+        // If x is smaller, ignore right half
+        else
+            high = mid - 1;
+    }
+
+    // If we reach here, then element was not present
+    return 0;
+}
+vector<vector<int>> findTriplets(vector<int>arr, int n, int K){
+    vector<vector<int>> vec;
+    int p=0;
+    insertionSort(arr,n);
+    for(int i=0;i<n-1;i++){
+        int third = K - arr[i] - arr[i+1];
+        if(binarySearch(arr,0,n-1,third)){
+            vec.push_back({arr[i],arr[i+1],third});
+            p++;
+        }
+        if(p>1){
+            if (vec[p - 2] == vec[p - 1]) {
+              vec.pop_back();
+              p--;
+            }
+        }
+    }
+    if(vec.empty())
+        return {{}};
+    return vec;
+}
