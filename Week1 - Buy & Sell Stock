@@ -1,0 +1,60 @@
+class Solution {
+public:
+        int calc(vector<int>& prices,int max,int min,int p,int q){
+            int maxpro;
+        if(p>=q)
+            return 0;
+        int a = p, b = q;
+        for(int i=a;i<=b;i++){
+            if (max<prices[i]){
+                max = prices[i];
+                p=i;
+            }
+            if (min>prices[i]){
+                min = prices[i];
+                q=i;
+            }
+        }
+        if(p > q)
+            return max-min;
+        else if(p==a && q==b){
+            max = 0; min = prices[q-1]; 
+            return calc(prices,max,min,p+1,q-1);
+        }
+        else if(p==a && q!=b){
+            int max2 = min;
+            for(int i=q+1;i<=b;i++){
+                max2 = (max2>prices[i])? max2:prices[i];
+            }
+            maxpro = max2 - min;
+            max = 0; min = prices[q-1]; 
+            return (maxpro>calc(prices,max,min,p+1,q-1))? maxpro:calc(prices,max,min,p+1,q-1);
+        }
+        else if(p!=a && q==b){
+            int min2 = max;
+            for(int i=a;i<p;i++){
+                min2 = (min2<prices[i])? min2:prices[i];
+            }
+            maxpro = max - min2;
+            max = 0; min = prices[q-1]; 
+             return (maxpro>calc(prices,max,min,p+1,q-1))? maxpro:calc(prices,max,min,p+1,q-1);
+        }
+        else{
+            int max2 = min , min2 = max;
+            for(int i=a;i<p;i++){
+                min2 = (min2<prices[i])? min2:prices[i];
+            }
+            for(int i=q+1;i<=b;i++){
+                max2 = (max2>prices[i])? max2:prices[i];
+            }
+            
+            return (max2-min > max-min2)? max2-min:max-min2;
+        }
+    }
+    int maxProfit(vector<int>& prices) {
+        int max = 0 , min = prices[0];
+        int init=0 , last=prices.size()-1;
+        return calc(prices,max,min,init,last);
+    }
+};
+
