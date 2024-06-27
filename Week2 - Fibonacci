@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int fib(int n) {
+        int i=0;
+        int sum=0,temp1=1,temp2;
+        while(i<n){
+            temp2 = temp1;
+            temp1 = sum;
+            sum+=temp2;
+            i++;
+        }
+        return sum;
+    }
+};
