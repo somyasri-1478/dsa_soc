@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        int n = chars.size();
+        int i=0 , j=0;
+        if(n==1){
+            return 1;
+        }
+        while(i<n-1){
+            int count = 1;
+            while(chars[i]==chars[i+1]){
+                count++;
+                i++;
+                if(i==n-1)
+                    break;
+                
+            }
+            chars[j] = chars[i];
+            j++;
+            if(count>1){
+                int alt = count/10;
+                int m = 1;
+                while(alt){
+                    alt /= 10;
+                    m *= 10;
+                }
+                alt = count;
+                while(m){
+                    chars[j] =alt/m + 48;
+                    j++;
+                    alt %= m;
+                    m /= 10;
+                }
+            }
+            if(i==n-2){
+                chars[j] = chars[i+1];
+                j++;
+            }
+            i++;
+        }
+        return j;
+
+    }
+};
