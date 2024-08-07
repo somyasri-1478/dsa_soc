@@ -1,0 +1,30 @@
+class MyStack {
+    private:
+    int Top;
+    int arr[100];
+public:
+    MyStack() : Top(-1){
+       
+    }
+    
+    void push(int x) {
+        if(Top<99)
+            arr[++Top] = x;        
+    }
+    
+    int pop() {
+        if(Top == -1)
+            return -1;
+        return arr[Top--];                
+    }
+    
+    int top() {
+        if(Top == -1)
+            return -1;
+        return arr[Top];        
+    }
+    
+    bool empty() {
+        return (Top == -1);        
+    }
+};
